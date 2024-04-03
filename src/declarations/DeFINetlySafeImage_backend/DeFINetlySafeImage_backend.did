@@ -1,0 +1,6 @@
+service : {
+  debugUserTransaction: () -> () query;
+  isHaveTransactionHistory: (principal) -> (bool) query;
+  payTransactionFee: () -> (bool);
+  sendImage: (principal, blob, bool, text) -> ();
+}

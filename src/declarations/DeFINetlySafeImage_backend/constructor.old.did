@@ -1,0 +1,5 @@
+service : {
+  debugUserTransaction: () -> () query;
+  payTransactionFee: () -> (bool);
+  sendImage: (principal, blob, bool, text) -> ();
+}

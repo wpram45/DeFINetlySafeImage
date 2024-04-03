@@ -1,12 +1,16 @@
 {
   "canisters": {
-    "DeFINetlySafeImage": {
+    "DeFINetlySafeImage_backend": {
       "main": "src/DeFINetlySafeImage/main.mo",
       "type": "motoko"
     },
-    "DeFINetlySafeImage_assets": {
+    "internet_identity" : {
+      "type": "pull",
+      "id": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+    },
+    "DeFINetlySafeImage_frontend": {
       "dependencies": [
-        "DeFINetlySafeImage"
+        "DeFINetlySafeImage_backend"
       ],
       "frontend": {
         "entrypoint": "src/DeFINetlySafeImage_assets/src/index.html"
@@ -24,12 +28,6 @@
       "packtool": ""
     }
   },
-  "dfx": "0.9.3",
-  "networks": {
-    "local": {
-      "bind": "127.0.0.1:8000",
-      "type": "ephemeral"
-    }
-  },
+  "output_env_file": ".env",
   "version": 1
 }
