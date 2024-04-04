@@ -1,6 +1,10 @@
 service : {
+  DecryptPassword: (text, text) -> (text) query;
+  EnryptPassword: (text, text) -> (text) query;
   debugUserTransaction: () -> () query;
+  getAdminIdentity: () -> (text) query;
   isHaveTransactionHistory: (principal) -> (bool) query;
   payTransactionFee: () -> (bool);
+  receiveImage: (principal, principal, bool, text) -> (blob);
   sendImage: (principal, blob, bool, text) -> ();
 }
