@@ -96,8 +96,16 @@ return ADMIN_INTERNET_IDENTITY;
 
              
                      }
+//if there is no transaction in history between these related users
+                else{
+                             D.print("not locked photo sending from:" # debug_show(Principal.toText(callerId))# "to :" # debug_show(Principal.toText(imageReceiverId)));
+                       var  newTransaction:Transaction = {sender=callerId;receiver=imageReceiverId;image=image;isLocked=false;passwordHash=""};
+ userTransactions.put(callerId,[newTransaction]);
+           await debugUserTransaction();
 
-                //if there is no transaction in history between these related users
+           return;
+                }
+                
              
 
 
@@ -110,15 +118,52 @@ return ADMIN_INTERNET_IDENTITY;
 
         else{
 
-                D.print("not locked photo sending from:" # debug_show(Principal.toText(callerId))# "to :" # debug_show(Principal.toText(imageReceiverId)));
+          
+         
+               
+           var  newTransaction:Transaction = {sender=callerId;receiver=imageReceiverId;image=image;isLocked=false;passwordHash=""};
+           
+          let isHaveTransactionHistoryResult:Bool= await isHaveTransactionHistory(callerId);
+              if(isHaveTransactionHistoryResult==true){
+
+
+                    switch(userTransactions.get(callerId)){
+
+                        case (null) {return};
+                        case (?transactionHistory)
+                        {
+                            let updatedTransactionHistory=Array.append<Transaction>(transactionHistory,[newTransaction]);
+
+                            userTransactions.put(callerId,updatedTransactionHistory);
+
+                            return;
+                        }
+
+                   
+
+                    }
+
+                                
+   
+             
+                     }
+                      
+//if there is no transaction in history between these related users
+                else{
+                             D.print("there is no transaction in history between these related users :" # debug_show(Principal.toText(callerId))# "to :" # debug_show(Principal.toText(imageReceiverId)));
                        var  newTransaction:Transaction = {sender=callerId;receiver=imageReceiverId;image=image;isLocked=false;passwordHash=""};
  userTransactions.put(callerId,[newTransaction]);
-         
-      
+           await debugUserTransaction();
+
+           return;
+
+
+                }
+     
 
         };
         //print state after insert operation
-  await debugUserTransaction();
+
             //if there is a transaction before get old transaction add their end
 
           
