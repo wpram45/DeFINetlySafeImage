@@ -25,12 +25,13 @@ actor ImageTransactionTracker {
     };
 
     // main HashMap to store our user Transaction
+    //Canisters must be scaleble 1 GB MAX so if userTransactions we must clear userTransactions periodically
     var userTransactions : HashMap.HashMap<Principal, [Transaction]> = HashMap.HashMap<Principal, [Transaction]>((0, Principal.equal, Principal.hash));
 
 
 
     public query func isHaveTransactionHistory(sender:Principal):async Bool{
-      switch (userTransactions.get(sender)) {
+      switch (userTransactions.get(sender)) { 
         case (null) { return false; };
         case (?transactionHistory) { return Array.size(transactionHistory) != 0; };
     };
@@ -60,6 +61,8 @@ return ADMIN_INTERNET_IDENTITY;
 
     };
 
+
+    //there should be ImageSize Limit in front end before send image turn it to bytes and send it to backEnd
     public shared(msg)  func sendImage(imageReceiverId:Principal,image:Blob,isLocked:Bool,passwordHash:Text):async(){
 
          
